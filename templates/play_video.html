@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load staticfiles%}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'video.js/video-js.min.css' %}">
+    <script type="text/javascript" src="{% static 'video.js/video.min.js' %}"></script>
+{% endblock%}
+{% block body %}
+    <video
+        id="my-player"
+        class="video-js"
+        controls
+        preload="auto"
+        data-setup='{}'>
+        <source src="{{video.video.url}}" type="video/mp4"></source>
+    </video>
+{% endblock %}
