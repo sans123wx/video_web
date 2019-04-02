@@ -1,0 +1,26 @@
+{% extends 'base_index.html' %}
+{% block index_body %}
+<div class="container">
+    <div class="row">
+            <div class="media">
+                <div class="media-left" style="width: 30%">
+                    <a href="#">
+                        <img class="media-object" src="{{video.video_img.url}}" style="width:100%">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">{{video.video_title}}</h4>
+                    <p><hr></p>
+                    <p>{{video.video_detail}}</p>
+                </div>
+            </div>       
+    </div>
+    <div class="row">
+        <div class="btn-group" style="padding-top: 20px">
+            {% for item in video.video_set.all%}
+            <a class="btn btn-primary" href="{% url 'play_video' %}?video_id={{item.id}}">{{item.name}}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

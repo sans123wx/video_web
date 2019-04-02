@@ -26,7 +26,8 @@ class Video_info(models.Model):
 
 #视频
 class Video(models.Model):
-    title = models.ForeignKey(Video_info , on_delete = models.DO_NOTHING , verbose_name = '视频名称')
+    title = models.ForeignKey(Video_info , on_delete = models.DO_NOTHING , verbose_name = '视频')
     video = models.FileField(upload_to = up_to_video , verbose_name = '视频')
+    name = models.CharField(max_length = 50 , default = '无' , verbose_name = '视频名称')
     def __str__(self):
         return self.title.video_title
