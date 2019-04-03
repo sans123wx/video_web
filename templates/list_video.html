@@ -4,9 +4,7 @@
     <div class="row">
             <div class="media">
                 <div class="media-left" style="width: 30%">
-                    <a href="#">
                         <img class="media-object" src="{{video.video_img.url}}" style="width:100%">
-                    </a>
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">{{video.video_title}}</h4>
@@ -15,12 +13,14 @@
                 </div>
             </div>       
     </div>
-    <div class="row">
-        <div class="btn-group" style="padding-top: 20px">
-            {% for item in video.video_set.all%}
-            <a class="btn btn-primary" href="{% url 'play_video' %}?video_id={{item.id}}">{{item.name}}</a>
-            {% endfor %}
+    <div class="row" style="padding-top: 20px">
+        {% for item in video.video_set.all%}
+        <div class="col-xs-6 col-md-2" style="margin-bottom: 10px">
+        <div class="btn-group" style="width: 100%">           
+            <a class="btn btn-primary" href="{% url 'play_video' %}?video_id={{item.id}}" style="width: 100%">{{item.name}}</a>            
         </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

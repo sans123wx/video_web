@@ -15,7 +15,7 @@
     <!-- 导航 -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="#">电影</a></li>
+        <li><a href="{% url 'list_type' %}?video_type=电影">电影</a></li>
         <li><a href="{% url 'list_type' %}?video_type=电视剧">电视剧</a></li>
         <li><a href="{% url 'list_type' %}?video_type=教程">教程</a></li>
       </ul>

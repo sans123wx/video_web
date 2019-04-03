@@ -9,11 +9,10 @@ def index(request):
     context['list_video'] = list_video
     return render(request , 'index.html' , context)
 
+#分类列表
 def list_type(request):
     video_type = request.GET.get('video_type')
-    print(video_type)
     list_video = Video_info.objects.filter(video_type__title = video_type)
-    print(list_video)
     context = {}
     context['list_video'] = list_video
     return render(request , 'list_type.html' , context)
