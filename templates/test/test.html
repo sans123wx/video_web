@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}测试页面{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'cropper/cropper.min.css' %}">
+    <style>
+        #file {
+            position: absolute;
+            left: 0;
+            top:0;
+            opacity: 0;
+        }
+        #image {
+            max-width: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#myModal">
+        上传图片
+</button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">图片上传</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label for="file" class="btn btn-primary">
+                        <input type="file" id="file">
+                        选择上传图片
+                        <span class="glyphicon glyphicon-folder-open"></span>
+                    </label>
+                </div>
+                <div>
+                    <img id="image"> 
+                </div>
+                <!-- <div class="small" style="height:100px;overflow: hidden;"></div>   -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="upload">上传</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cropper/cropper.min.js' %}"></script>
+    <!-- <script src="{% static 'cropper/jquery-cropper.min.js' %}"></script> -->
+    <!-- 点击按钮触发模态框 -->
+    <script>
+        $('#myModal').on('show.bs.modal' , function(){
+            $('#image').cropper({
+                aspectRatio: 16 / 9,
+                viewMode: 1,
+                preview:".small",
+                dragMode: 'move',
+                modal: false,
+                cropBoxResizable:false,
+            })
+        }).on('hidden.bs.modal', function (){
+            $('#image').cropper('destroy');
+            var file = document.getElementById('file');
+            file.value = '';
+        });
+
+        $('#upload').click(function(){
+            var cas=$('#image').cropper('getCroppedCanvas');
+            cas.toBlob(function(e){
+                console.log(e)
+            } , "image/jpeg" , 0.95)
+        })
+
+        $("#file").change(function(){  
+         var objUrl = getObjectURL(this.files[0]) ;//获取文件信息  
+          if (objUrl) {  
+                $('#image').cropper('replace' , objUrl , false) 
+            }   
+        });
+
+        function getObjectURL(file) {  
+         var url = null;   
+         if (window.createObjectURL!=undefined) {  
+          url = window.createObjectURL(file) ;  
+         } else if (window.URL!=undefined) { // mozilla(firefox)  
+          url = window.URL.createObjectURL(file) ;  
+         } else if (window.webkitURL!=undefined) { // webkit or chrome  
+          url = window.webkitURL.createObjectURL(file) ;  
+         }  
+         return url ;  
+        }  
+    </script>
+    
+{% endblock %}

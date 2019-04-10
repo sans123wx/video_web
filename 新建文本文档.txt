@@ -1,0 +1,13 @@
+1.弹出时触发事件 ok
+2.文件上传图标 ok
+3.搭建cropper基本环境 ok
+4.设置cropper参数和方法 ok
+5.使用ajax上传
+6.后台设置
+7.添加注释
+
+.docs-tooltip {
+  display: block;
+  margin: -0.5rem -0.75rem;
+  padding: 0.5rem 0.75rem;
+}

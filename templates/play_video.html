@@ -1,10 +1,13 @@
-{% extends 'base_index.html' %}
+{% extends 'base.html' %}
 {% load staticfiles%}
+
+{% block title %}视频播放{% endblock %}
+
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="{% static 'video.js/video-js.min.css' %}">
-    <script type="text/javascript" src="{% static 'video.js/video.min.js' %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'video.js/video-js.min.css' %}">   
 {% endblock%}
-{% block index_body %}
+
+{% block content %}
     <video
         id="my-player"
         class="video-js"
@@ -13,4 +16,8 @@
         data-setup='{}'>
         <source src="{{video.video.url}}" type="video/mp4"></source>
     </video>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{% static 'video.js/video.min.js' %}"></script>
 {% endblock %}
