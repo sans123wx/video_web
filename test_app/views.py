@@ -8,8 +8,6 @@ from django.http import HttpResponse
 
 def test(request):
     if request.method == "POST":
-        print(request.POST)
-        print(request.FILES)
         form = TestModelForm(request.POST)
         if form.is_valid():
             print(2)

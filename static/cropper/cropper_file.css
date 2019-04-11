@@ -1,0 +1,13 @@
+#file {
+    position: absolute;
+    left: 0;
+    top:0;
+    opacity: 0;
+}
+#image {
+    max-width: 100%;
+}
+.small {
+    height:100px;
+    overflow: hidden;
+}
