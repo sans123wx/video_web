@@ -2,8 +2,8 @@
 2.文件上传图标 ok
 3.搭建cropper基本环境 ok
 4.设置cropper参数和方法 ok
-5.使用ajax上传
-6.后台设置
+5.使用ajax上传 ok
+6.后台设置 ok
 7.添加注释
 
 .docs-tooltip {
