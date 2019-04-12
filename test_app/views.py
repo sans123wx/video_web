@@ -15,6 +15,8 @@ def test(request):
             new_test.image = request.FILES.get('image')
             new_test.save()
             return HttpResponse('1')
+        else:
+            return HttpResponse('2')
     else:
         form = TestModelForm()
         return render(request , 'test/test.html' , {'form':form})
