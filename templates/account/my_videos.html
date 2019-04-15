@@ -1,13 +1,9 @@
-{% extends 'base.html' %}
-
-{% block include_header %}
-    {% include 'account/header.html' %}
-{% endblock %}
+{% extends 'account/base_account.html' %}
 
 {% block content %}
 <div class="container">
     <div class="row text-right">
-        <button class="btn btn-primary">新建视频信息</button> 
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">新建视频信息</button> 
     </div>
     <div class="row">
         <table class="table table-hover">
@@ -26,8 +22,8 @@
                     <td>{{ video_info.video_title }}</td>
                     <td>{{ video_info.video_type.title }}</td>
                     <td>
-                        <span class="glyphicon glyphicon-plus"></span>
-                        <span class="glyphicon glyphicon-trash"></span>
+                        <button class="btn btn-link btn-xs"><span class="glyphicon glyphicon-plus"></span></button>  
+                        <button class="btn btn-link btn-xs"><span class="glyphicon glyphicon-trash"></span></button>  
                     </td>
                 </tr>
                 {% empty %}
@@ -35,6 +31,25 @@
                 {% endfor %}
             </tbody>
         </table>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock%}
