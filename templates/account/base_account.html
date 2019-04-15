@@ -3,3 +3,15 @@
 {% block include_header %}
     {% include 'account/header.html' %}
 {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col-xs-2">
+        {% include 'account/leftslider.html' %}
+    </div>
+    <div class="col-xs-10">
+        {% block content_account %}{% endblock %}
+    </div>
+</div>
+{% endblock %}
+

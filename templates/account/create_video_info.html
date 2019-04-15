@@ -1,0 +1,129 @@
+{% extends 'account/base_account.html' %}
+{% load staticfiles %}
+
+{% block title %}新建视频{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'cropper/cropper.min.css' %}">
+    <link rel="stylesheet" href="{% static 'cropper/cropper_file.css' %}">
+{% endblock %}
+
+{% block content_account %}
+<form action="{% url 'create_video_info' %}" class="form-horizontal" enctype="multipart/form-data" id="form">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group">
+        <label for="{{ field.id_for_label }}" class="col-xs-3 control-label">{{ field.label }}</label>
+        <div class="col-xs-9">
+            {{ field }}
+        </div>
+    </div>
+    {% endfor %}
+    <div class="form-group">
+            <label class="col-sm-3 control-label">
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                    上传图片
+                </button>
+            </label>
+            <div class="col-sm-9">
+                <img id="img_croppered">
+            </div>
+        </div>
+        <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <input type="button" value="提交" class="btn btn-primary" id="submit">
+                </div>    
+            </div>
+</form>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">图片上传</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- 上传按钮 -->
+                    <label for="file" class="btn btn-primary">
+                        <input type="file" id="file">
+                        选择上传图片
+                        <span class="glyphicon glyphicon-folder-open"></span>
+                    </label>
+                    <!-- 预览框 -->
+                    <div>
+                        <img id="image"> 
+                    </div>
+                    <div class="small"></div>  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="upload" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cropper/cropper.js' %}"></script>
+    <script src="{% static 'cropper/jquery-cropper.min.js' %}"></script>
+    <script src="{% static 'my_js.js' %}"></script>
+    <script>
+        // 裁剪后的图片
+        var file_cropperd = ''
+        // 模态框打开时初始化裁剪框，关闭时销毁裁剪框，清除file值
+        $('#myModal').on('show.bs.modal' , function(){
+            $('#image').cropper({
+                aspectRatio: 8 / 5,
+                viewMode: 1,
+                preview:".small",
+                dragMode: 'move',
+                // modal: false,
+                cropBoxResizable:false,
+            })
+        }).on('hidden.bs.modal', function (){
+            $('#image').cropper('destroy');
+            var file = document.getElementById('file');
+            file.value = '';
+            var objUrl = getObjectURL(file_cropperd) ;//获取文件信息  
+            if (objUrl) {  
+                $('#img_croppered').attr('src' , objUrl) 
+            }  
+        });
+        // 获取裁剪后的图片
+        $('#upload').click(function(){
+            var cas=$('#image').cropper('getCroppedCanvas');
+            data_file = cas.toDataURL('image/jpeg' , 0.9)
+            file_cropperd = dataURLtoBlob(data_file)
+        });
+        // ajax提交数据，成功返回后重定向
+        $('#submit').click(function(){
+            var f = document.getElementById('form');
+            var formdata = new FormData(f)
+            formdata.append('image',file_cropperd)
+            $.ajax({
+                url:"{% url 'create_video_info' %}",
+                method:"POST",
+                processData: false,
+                contentType: false,
+                data:formdata,
+                success:function(data){
+                    if(data == '1'){
+                        window.location.href = "{% url 'my_videos' %}"
+                    }
+                    else{
+                        alert("信息填写不正确")
+                    }
+                }
+            })
+        })
+        // 图片更改时触发
+        $("#file").change(function(){  
+         var objUrl = getObjectURL(this.files[0]) ;//获取文件信息  
+          if (objUrl) {  
+                $('#image').cropper('replace' , objUrl , false) 
+            }
+        }); 
+    </script>    
+{% endblock %}
