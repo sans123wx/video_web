@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'test_app',
     'video',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -119,6 +120,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+LOGIN_URL = '/admin/'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR , 'static_collected')
 STATICFILES_DIRS = (

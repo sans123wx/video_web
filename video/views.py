@@ -7,7 +7,7 @@ def index(request):
     list_video = Video_info.objects.filter(video_type__title = '电视剧')
     context = {}
     context['list_video'] = list_video
-    return render(request , 'index.html' , context)
+    return render(request , 'video/index.html' , context)
 
 #分类列表
 def list_type(request):
@@ -15,7 +15,7 @@ def list_type(request):
     list_video = Video_info.objects.filter(video_type__title = video_type)
     context = {}
     context['list_video'] = list_video
-    return render(request , 'list_type.html' , context)
+    return render(request , 'video/list_type.html' , context)
 
 #播放
 def play_video(request):
@@ -23,7 +23,7 @@ def play_video(request):
     video = Video.objects.get(id = video_id)
     context = {}
     context['video'] = video
-    return render(request , 'play_video.html' , context)
+    return render(request , 'video/play_video.html' , context)
 
 #视频列表
 def list_video(request):
@@ -31,4 +31,4 @@ def list_video(request):
     video = Video_info.objects.get(id = video_info_id)
     context = {}
     context['video'] = video
-    return render(request , 'list_video.html' , context)
+    return render(request , 'video/list_video.html' , context)
