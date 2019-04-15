@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block include_header %}
+    {% include 'account/header.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row text-right">
+        <button class="btn btn-primary">新建视频信息</button> 
+    </div>
+    <div class="row">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>名称</th>
+                    <th>分类</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for video_info in video_infos %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ video_info.video_title }}</td>
+                    <td>{{ video_info.video_type.title }}</td>
+                    <td>
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </td>
+                </tr>
+                {% empty %}
+                没有资源
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock%}

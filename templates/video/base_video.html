@@ -10,8 +10,9 @@
     {% block head %}{% endblock %}
   </head>
   <body>
-    {% block include_header %}{% endblock %}
-    {% block content %}{% endblock %}
+    {% include 'video/header.html' %}
+
+    {%block content %}{% endblock %}
     <script src="{%static 'jquery-3.3.1.min.js'%}"></script>
     <script src="{%static 'bootstrap-3.3.7/js/bootstrap.min.js'%}"></script>
     {% block script %}{% endblock %}
