@@ -8,16 +8,30 @@
 {% endblock%}
 
 {% block content %}
-    <video
+<div class="container">
+    <div class="row text-center">
+        <h4>{{ video.name }}</h4>
+    </div>
+    <div class="row">
+        <video
         id="my-player"
-        class="video-js"
+        class="video-js vjs-fluid"
         controls
         preload="auto"
-        data-setup='{}'>
+        data-setup="{}"
+        >
         <source src="{{video.video.url}}" type="video/mp4"></source>
-    </video>
+    </video>              
+    </div>
+</div>
+    
 {% endblock %}
 
 {% block script %}
 <script type="text/javascript" src="{% static 'video.js/video.min.js' %}"></script>
+<script>
+videojs('my-player', {
+  playbackRates: [0.5, 1, 1.5, 2],
+});
+</script>
 {% endblock %}

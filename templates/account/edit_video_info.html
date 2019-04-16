@@ -1,7 +1,7 @@
 {% extends 'account/base_account.html' %}
 {% load staticfiles %}
 
-{% block title %}新建视频{% endblock %}
+{% block title %}修改视频信息{% endblock %}
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'cropper/cropper.min.css' %}">
@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content_account %}
-<form action="{% url 'create_video_info' %}" class="form-horizontal" enctype="multipart/form-data" id="form">
+<form action="{% url 'edit_video_info' %}" method="POST" class="form-horizontal" id="form">
     {% csrf_token %}
     {% for field in form %}
     <div class="form-group">
@@ -18,51 +18,53 @@
             {{ field }}
         </div>
     </div>
+    {% empty %}
+    <p>没有此视频信息</p>
     {% endfor %}
     <div class="form-group">
-            <label class="col-sm-2 control-label">
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-                    上传图片
-                </button>
-            </label>
-            <div class="col-sm-10">
-                <img id="img_croppered">
-            </div>
+        <label class="col-sm-2 control-label">
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                修改图片
+            </button>
+        </label>
+        <div class="col-sm-10">
+            <img id="img_croppered" src="{{ video_info.video_img.url }}" width="100%">
         </div>
-        <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-9">
-                    <input type="button" value="提交" class="btn btn-primary" id="submit">
-                </div>    
-            </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <input type="button" value="提交" class="btn btn-primary" id="submit">
+        </div>    
+    </div>
 </form>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">图片上传</h4>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">图片上传</h4>
+            </div>
+            <div class="modal-body">
+                <!-- 上传按钮 -->
+                <label for="file" class="btn btn-primary">
+                    <input type="file" id="file">
+                    选择上传图片
+                    <span class="glyphicon glyphicon-folder-open"></span>
+                </label>
+                <div>
+                    <img id="image" src="{{ video_info.video_img.url }}"> 
                 </div>
-                <div class="modal-body">
-                    <!-- 上传按钮 -->
-                    <label for="file" class="btn btn-primary">
-                        <input type="file" id="file">
-                        选择上传图片
-                        <span class="glyphicon glyphicon-folder-open"></span>
-                    </label>
-                    <!-- 预览框 -->
-                    <div>
-                        <img id="image"> 
-                    </div>
-                    <div class="small"></div>  
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="upload" data-dismiss="modal">确定</button>
-                </div>
+                <!-- 预览框 -->
+                <div class="small"></div>  
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="upload" data-dismiss="modal">确定</button>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
 
 {% block script %}
@@ -103,7 +105,7 @@
             var formdata = new FormData(f)
             formdata.append('image',file_cropperd)
             $.ajax({
-                url:"{% url 'create_video_info' %}",
+                url:"{% url 'edit_video_info' %}?video_info_id={{ video_info.id }}",
                 method:"POST",
                 processData: false,
                 contentType: false,
@@ -125,5 +127,5 @@
                 $('#image').cropper('replace' , objUrl , false) 
             }
         }); 
-    </script>    
+    </script>
 {% endblock %}

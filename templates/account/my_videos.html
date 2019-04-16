@@ -17,11 +17,10 @@
             <td>{{ video_info.video_title }}</td>
             <td>{{ video_info.video_type.title }}</td>
             <td>
-                <button class="btn btn-link btn-xs" id="{{ video_info.id }}" data-toggle="modal" data-target="#myModal" 
-                onclick="">
+                <a class="btn btn-link btn-xs" href="{% url 'edit_video_info' %}?video_info_id={{ video_info.id }}">
                     <span class="glyphicon glyphicon-pencil"></span>
-                </button>  
-                <button class="btn btn-link btn-xs" id="{{ video_info.id }}" data-toggle="modal" data-target="#myModal">
+                </a>  
+                <button class="btn btn-link btn-xs">
                     <span class="glyphicon glyphicon-trash"></span>
                 </button>  
             </td>
