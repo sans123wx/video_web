@@ -1,0 +1,25 @@
+{% extends 'video/base_video.html' %}
+
+{% block title %}查询结果{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div>
+        <h4>
+            查询“{{ wd }}”，找到{{ result.count }}个结果
+        </h4>
+    </div>
+    <hr>
+    <div>
+        {% if wd %}
+            {% for video_info in result %}
+            <p><a href="{% url 'list_video' %}?video_info_id={{ video_info.id }}">{{ video_info.video_title }}</a></p>
+            {% empty %}
+            <p>没有找到任何结果</p>
+            {% endfor %}
+        {% else %}
+            <p>请输入查询内容</p>
+        {% endif %}
+    </div>  
+</div>
+{% endblock %}
